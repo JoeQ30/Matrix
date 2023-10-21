@@ -6,7 +6,7 @@ SSeg Segment
 SSeg EndS
 
 Datos Segment               ; Define un segmento llamado "Datos" para almacenar variables y datos.
-    char    db "R"
+    char    dw "R"
     psp     dw 00,00
 
 Datos Ends                  ; Finaliza la definición del segmento "Datos".
@@ -47,17 +47,17 @@ inicio:
     mov     es,ax 
     mov     ah,3
     mov     cx,21
-    mov     si,OFFSET char  ;usar cracter almacenado en char
     mov     di,160
 
+    mov     al, 'R'
+
 animation:
-    lodsb
+    ;lodsb
     cmp     cx, 21
     je      first
 
     dec     di
     dec     di
-    mov     al, [si]        ; Cargar el caracter desde la variable char
     mov     es:[di],al      ;foreground
     inc     di
     mov     es:[di],0h      ;background
@@ -66,7 +66,6 @@ animation:
     add     di, 158
 
   first:
-    mov     al, [si]        ; Cargar el caracter desde la variable char
     mov     es:[di],al      ;foreground
     inc     di
     mov     es:[di],0ah     ;background
