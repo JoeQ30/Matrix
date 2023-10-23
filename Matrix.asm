@@ -49,7 +49,7 @@ inicio:
     mov     cx,21
     mov     di,160
 
-    mov     al, 'R'
+    mov     al, RandomChar ;LINEA DE PRUEBA CAMBIAR SI NO
 
 animation:
     ;lodsb
@@ -77,6 +77,39 @@ animation:
     pop     ax
 
 loop animation
+
+RandomChar Proc Near ;;;;;;;;;FUNCION A PROBAR
+; Genera un número aleatorio y lo convierte a un carácter ASCII
+    push    ax
+    push    bx
+    push    cx
+    push    dx
+    push    si
+    push    di
+    push    bp
+
+    mov     ax, 40h         ; Carga el valor 40h en el registro AX.
+    mov     es, ax          ; Carga el valor de AX en el registro de segmento ES.
+    mov     bx, 6Ch         ; Carga el valor 6Ch en el registro BX.
+    mov     ax, es:[bx]     ; Carga el valor de la dirección de memoria ES:6Ch en el registro AX.
+    mov     dx, es:[bx+2]   ; Carga el valor de la dirección de memoria ES:6Eh en el registro DX.
+    mov     ax, dx          ; Carga el valor de DX en el registro AX.
+    mov     dx, 25173       ; Carga el valor 25173 en el registro DX.
+    mul     dx              ; Multiplica los valores de AX y DX y almacena el resultado en DX:AX.
+    add     ax, 13849       ; Suma el valor 13849 al valor de AX y almacena el resultado en AX.
+    mov     dx, 65521       ; Carga el valor 65521 en el registro DX.
+    div     dx              ; Divide los valores de DX:AX entre DX y almacena el cociente en AX y el residuo en DX.
+    mov     RandomChar, al  ; Carga el valor de AX en la variable RandomChar.
+
+    pop     bp
+    pop     di
+    pop     si
+    pop     dx
+    pop     cx
+    pop     bx
+    pop     ax
+    ret
+RandomChar endP
 
 salir:                        ; Etiqueta de finalización del programa.
     mov ax, 4c00h           ; Prepara una llamada a la interrupción 21h para terminar el programa.
